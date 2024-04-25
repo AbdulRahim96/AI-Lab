@@ -31,7 +31,10 @@ class Tree:
         self.root = None
 
     def insert(self, val):
-        self.root = self.insertRecursive(self.root, val)
+        if self.root is None:
+            self.root = Node(val)
+        else:
+            self.insertRecursive(self.root, val)
 
     def insertRecursive(self, root, val):
         if(root is None):
@@ -65,12 +68,26 @@ class Tree:
             return self.insertRecursiveSearch(parent.left, val)
         elif(val > parent.key):
             return self.insertRecursiveSearch(parent.right, val)
-
+        
+# creating object
 tree = Tree()
-tree.insert(2)
-tree.insert(4)
-tree.insert(9)
-tree.insert(1)
+# inserting values
+tree.insert(10)
 tree.insert(20)
-tree.traverse(tree.root)
-print(tree.search(2))
+tree.insert(5)
+tree.insert(15)
+tree.insert(30)
+tree.insert(25)
+tree.insert(23)
+tree.insert(27)
+tree.insert(24)
+tree.insert(26)
+tree.insert(28)
+tree.insert(29)
+tree.insert(31)
+# traversing
+tree.traversing()
+
+# searching
+print(tree.search(20))
+
