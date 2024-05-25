@@ -3,9 +3,9 @@ import pandas as pd
 
 # make a data variable for Dataframe contructor
 data = {
-    'Name': ['John', 'Anna', 'Peter'],
-    'Age': [28, 24, 33],
-    'City': ['New York', 'Los Angeles', 'Chicago']
+    'Name': ['John', 'Anna', 'Peter', 'ars'],
+    'Age': [28, 24, 33, 27],
+    'City': ['New York', 'Los Angeles', 'Chicago', 'pak']
 }
 
 
@@ -15,14 +15,14 @@ data = {
 df = pd.DataFrame(data)
 
 # printing the Dataframe
-print(df)
+print(df,"\n")
 
 # printing the Dataframe
-print(df.head())
+print(df.head(),"\n")
 
 # printing the Dataframe
 
-print(df.tail())
+print(df.tail(),"\n")
 
 # printing the Dataframe
 print(df.shape)
