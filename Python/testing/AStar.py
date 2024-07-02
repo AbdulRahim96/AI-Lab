@@ -11,8 +11,7 @@ Graph_nodes = {
     'J': [('E', 5), ('I', 3)]
 }
 
-
-def Heurisitc(n): # where n is the key
+def Heuristic(n): # where n is the key
     H = {
         'A': 10,
         'B': 8,
@@ -23,7 +22,108 @@ def Heurisitc(n): # where n is the key
         'G': 5,
         'H': 3,
         'I': 1,
-        'J': 2
+        'J': 0
     }
 
     return H[n] # return value using key
+
+#define fuction to return neighbor and its distance
+#from the passed node
+def get_neighbors(v):
+    if v in Graph_nodes:
+        return Graph_nodes[v]
+    else:
+        return None
+    
+def aStarAlgo(start_node, stop_node):
+         
+        open_set = set(start_node) 
+        closed_set = set()
+        g = {} #store distance from starting node
+        parents = {}# parents contains an adjacency map of all nodes
+ 
+        #ditance of starting node from itself is zero
+        g[start_node] = 0
+        
+        #start_node is root node i.e it has no parent nodes
+        
+        #so start_node is set to none
+        parents[start_node] = None
+         
+         
+        while len(open_set) > 0:
+            n = None
+            
+            #node with lowest f() is found
+            for v in open_set:
+                if n == None or g[v] + Heuristic(v) < g[n] + Heuristic(n):
+                    n = v
+             
+                     
+            if n == stop_node or Graph_nodes[n] == None:
+                pass
+            else:
+                
+                
+                # This block of code ensures that each unvisited neighbor of the current node is added to the open_set, 
+                # its parent is recorded, and the cost to reach it (g[m]) is calculated and stored. 
+                # This is essential for the A* algorithm to explore the graph efficiently and reconstruct the shortest path.
+                
+                
+                for (m, weight) in get_neighbors(n):
+                    #nodes 'm' not in first and last set are added to first
+                    #n is set its parent
+                    if m not in open_set and m not in closed_set:
+                        open_set.add(m)
+                        parents[m] = n
+                        g[m] = g[n] + weight
+                         
+     
+                    #for each node m,compare its distance from start i.e g(m) to the
+                    #from start through n node
+                    else:
+                        
+                        if g[m] > g[n] + weight:
+                            #update g(m)
+                            g[m] = g[n] + weight
+                            #change parent of m to n
+                            parents[m] = n
+                             
+                            #if m in closed set,remove and add to open
+                            if m in closed_set:
+                                closed_set.remove(m)
+                                open_set.add(m)
+ 
+            if n == None:
+                print('Path does not exist!')
+                return None
+ 
+            # if the current node is the stop_node
+            # then we begin reconstructin the path from it to the start_node
+            if n == stop_node:
+                path = []
+ 
+                while parents[n] != None: #parent of 'A' is 'null'
+                    print("Parent of",n , "is", parents[n])
+                    path.append(n)
+                    print("append", path, "\n")
+                    n = parents[n]
+ 
+                path.append(start_node)
+                print("append", path)
+                path.reverse()
+ 
+                print('Path found: {}'.format(path))
+                return path
+ 
+ 
+            # remove n from the open_list, and add it to closed_list
+            # because all of his neighbors were inspected
+            open_set.remove(n)
+            closed_set.add(n)
+ 
+        print('Path does not exist!')
+        return None
+
+mypath = aStarAlgo('A', 'J')
+#print(mypath[ : : 2])
